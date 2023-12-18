@@ -32,7 +32,17 @@ class FenTree{
         return rangesum(right+1)-rangesum(left);
     }
     int findLB(int val){
-        //need to code it up
+        //binary lifting
+        int n=fen.size();
+        int prevsum=0;
+        int pos=0;
+        for(int i=log2(n);i>=0;i--){
+            if(prevsum+fen[pos+(1<<i)]<val){  //decide whether to give a lift or not
+                prevsum+=fen[pos+(1<<i)];   
+                pos+=(1<<i);                  //giving a lift to the pos
+            }
+        }
+        return pos+1;
     }
 };
 int main(){
@@ -47,4 +57,5 @@ int main(){
         cin>>ql>>qr;
         cout<<ft->query(ql-1,qr-1)<<endl;
     }
+    // cout<<ft->findLB(9)<<endl;
 }
