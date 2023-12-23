@@ -20,30 +20,29 @@
 // 3
 #include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define mx 1e7
+ll f(int indx,int target,vector<int> &arr){
+    int n=arr.size();
+    vector<int> dp(target+1,mx);
+    dp[0]=0; //basecase
+    //space optimization as we are using only the value from the previous row only
+    for(indx=1;indx<=n;indx++){
+        int take=mx,nottake=mx;
+        for(int j=0;j<=target;j++){
+            if(j>=arr[indx-1]){
+                take=1+dp[j-arr[indx-1]];
+            }
+            nottake=0+dp[j];
+            dp[j]=min(take,nottake);
+        }
+    } 
+    return (dp[target]>=mx)?-1:dp[target];
+}
 int main(){
     int n,x;
     cin>>n>>x;
-    int arr[n];
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-    }
-    vector<vector<int>> dp(n,vector<int> (x+1,-1));
-    if(indx==-1) {
-        if(target==0){
-            return 0;
-        }
-        return 1e7;
-    }
-    if(dp[indx][target]!=-1) return dp[indx][target];
-    int take=INT_MAX,nottake=INT_MAX;
-    if(target>=arr[indx]){
-        take=1+f(indx,target-arr[indx],arr,dp);
-    }
-    nottake=f(indx-1,target,arr,dp);
-    return dp[indx][target]=min(take,nottake);
-    if(ans>=1e7){
-        cout<<-1<<endl;
-    }
-    else
-    cout<<ans<<endl;
+    vector<int> arr(n);
+    for(auto &i:arr) cin>>i;
+    cout<<f(n-1,x,arr)<<endl;
 }

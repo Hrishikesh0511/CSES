@@ -28,12 +28,28 @@
 
 // Output:
 // 8
+
 #include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define mod 1000000007
+ll f(int target,vector<int> &arr){
+    int n=arr.size();
+    vector<ll> dp(target+1,0);
+    dp[0]=1;
+    for(int j=0;j<=target;j++){
+    for(int indx=1;indx<=n;indx++){
+              if(j>=arr[indx-1]){
+                dp[j]=(dp[j]+dp[j-arr[indx-1]])%mod;
+              }
+            }
+    }
+    return dp[target];
+}
 int main(){
-int n;
-cin>>n;
-vector<int> arr(n);
-for(int i=0;i<n;i++) cin>>arr[i];
-
+    int n,target;
+    cin>>n>>target;
+    vector<int> arr(n);
+    for(auto &i:arr) cin>>i;   
+    cout<<f(target,arr)<<endl;
 }
