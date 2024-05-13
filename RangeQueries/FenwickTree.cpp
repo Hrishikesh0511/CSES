@@ -3,20 +3,21 @@
 using namespace std;
 class FenTree{
     vector<int> fen;
+    int n;
     public:
     FenTree(int n){
+        this->n=n+1;
         fen.resize(n+1,0);
     }
     void update(int i,int val){
-        int N=fen.size();
-        while(i<N){
+        while(i<n){
             fen[i]+=val;
             i+=(i&(-i));   //going to the next index where we need to update
         }
     }
     void build(vector<int> &arr){
-        int n=arr.size();
-        for(int i=0;i<n;i++){
+        int N=arr.size();
+        for(int i=0;i<N;i++){
             update(i+1,arr[i]);
         }
     }
@@ -33,7 +34,6 @@ class FenTree{
     }
     int findLB(int val){
         //binary lifting
-        int n=fen.size();
         int prevsum=0;
         int pos=0;
         for(int i=log2(n);i>=0;i--){
